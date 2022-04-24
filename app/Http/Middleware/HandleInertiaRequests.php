@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Supports\TranslationSupport;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -31,13 +32,15 @@ class HandleInertiaRequests extends Middleware
      * Defines the props that are shared by default.
      *
      * @see https://inertiajs.com/shared-data
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
+     * @throws \Exception
      */
     public function share(Request $request)
     {
+        $translationSupport = new TranslationSupport();
         return array_merge(parent::share($request), [
-            //
+            'translations' => $translationSupport->getTranslationStrings(),
         ]);
     }
 }
