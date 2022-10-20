@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "250c4573168f794bd660e84729d39d20",
+    "content-hash": "af3ce905466d9b540532e198855fbca5",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -3987,6 +3987,62 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.11.8"
             },
             "time": "2022-07-28T14:25:11+00:00"
+        },
+        {
+            "name": "pxlrbt/filament-environment-indicator",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pxlrbt/filament-environment-indicator.git",
+                "reference": "fbe21d2709e1331d539fce54a3c1e8f51693d15e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pxlrbt/filament-environment-indicator/zipball/fbe21d2709e1331d539fce54a3c1e8f51693d15e",
+                "reference": "fbe21d2709e1331d539fce54a3c1e8f51693d15e",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.9.15",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "\\pxlrbt\\FilamentEnvironmentIndicator\\FilamentEnvironmentIndicatorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "pxlrbt\\FilamentEnvironmentIndicator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dennis Koch",
+                    "email": "info@pixelarbeit.de"
+                }
+            ],
+            "description": "Indicator for the current environment inside Filament",
+            "keywords": [
+                "environment indicator",
+                "filament",
+                "laravel-filament"
+            ],
+            "support": {
+                "issues": "https://github.com/pxlrbt/filament-environment-indicator/issues",
+                "source": "https://github.com/pxlrbt/filament-environment-indicator/tree/v1.0.0"
+            },
+            "time": "2022-10-04T15:11:56+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

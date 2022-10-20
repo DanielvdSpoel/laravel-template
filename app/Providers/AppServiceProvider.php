@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Filament\Facades\Filament;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
+use pxlrbt\FilamentEnvironmentIndicator\FilamentEnvironmentIndicator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,5 +32,9 @@ class AppServiceProvider extends ServiceProvider
                 mix('css/filament.css'),
             );
         });
+
+        FilamentEnvironmentIndicator::configureUsing(function (FilamentEnvironmentIndicator $indicator) {
+            $indicator->visible = fn () => !App::environment('production');
+        }, isImportant: true);
     }
 }
