@@ -27,14 +27,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Filament::serving(function () {
-
             Filament::registerTheme(
                 mix('css/filament.css'),
             );
         });
 
         FilamentEnvironmentIndicator::configureUsing(function (FilamentEnvironmentIndicator $indicator) {
-            $indicator->visible = fn () => !App::environment('production');
+            $indicator->visible = fn () => ! App::environment('production');
         }, isImportant: true);
     }
 }

@@ -4,28 +4,27 @@ namespace App\Supports;
 
 use DirectoryIterator;
 use Exception;
-use App;
+use Illuminate\Support\Facades\App;
+use SplFileInfo;
 
 class TranslationSupport
 {
     private array $availableLocales = ['en', 'nl'];
 
-
     public function getTranslationStrings()
     {
-
         $path = resource_path('lang');
         $dir = new DirectoryIterator($path);
 
         foreach ($dir as $fileinfo) {
-            if (!$fileinfo->isDot()) {
+            if (! $fileinfo->isDot()) {
                 $files[] = $fileinfo->getRealPath();
             }
         }
         asort($files);
 
         foreach ($files as $fileName) {
-            $fileinfo = new \SplFileInfo($fileName);
+            $fileinfo = new SplFileInfo($fileName);
 
             $noExt = $this->removeExtension($fileinfo->getFilename());
             if ($noExt !== '') {
@@ -37,7 +36,9 @@ class TranslationSupport
                     $local = $this->allocateLocaleArray($fileinfo->getRealPath());
                 } else {
                     $local = $this->allocateLocaleJSON($fileinfo->getRealPath());
-                    if ($local === null) continue;
+                    if ($local === null) {
+                        continue;
+                    }
                 }
 
                 if (isset($locales[$noExt])) {
@@ -57,11 +58,10 @@ class TranslationSupport
         }
 
         return $jsonLocales;
-
     }
 
     /**
-     * @param string $path
+     * @param  string  $path
      * @return array
      */
     private function allocateLocaleJSON($path)
@@ -70,8 +70,8 @@ class TranslationSupport
         if (pathinfo($path, PATHINFO_EXTENSION) !== 'json') {
             return null;
         }
-        $tmp = (array)json_decode(file_get_contents($path), true);
-        if (gettype($tmp) !== "array") {
+        $tmp = (array) json_decode(file_get_contents($path), true);
+        if (gettype($tmp) !== 'array') {
             throw new Exception('Unexpected data while processing ' . $path);
         }
 
@@ -79,7 +79,7 @@ class TranslationSupport
     }
 
     /**
-     * @param string $path
+     * @param  string  $path
      * @return array
      */
     private function allocateLocaleArray($path, $multiLocales = false)
@@ -106,10 +106,11 @@ class TranslationSupport
                     continue;
                 }
 
-                $tmp = include($fileName);
+                $tmp = include $fileName;
 
-                if (gettype($tmp) !== "array") {
+                if (gettype($tmp) !== 'array') {
                     throw new Exception('Unexpected data while processing ' . $fileName);
+
                     continue;
                 }
                 if ($lastLocale !== false) {
@@ -128,14 +129,10 @@ class TranslationSupport
                 $data[$noExt] = $this->adjustArray($tmp);
             }
         }
+
         return $data;
     }
 
-
-    /**
-     * @param array $arr
-     * @return array
-     */
     private function adjustArray(array $arr): array
     {
         $res = [];
@@ -148,15 +145,12 @@ class TranslationSupport
                 $res[$key] = $this->removeEscapeCharacter($this->adjustString($val));
             }
         }
+
         return $res;
     }
 
     /**
      * Adjust vendor index placement.
-     *
-     * @param array $locales
-     *
-     * @return array
      */
     private function adjustVendor(array $locales): array
     {
@@ -177,17 +171,15 @@ class TranslationSupport
 
     /**
      * Turn Laravel style ":link" into vue-i18n style "{link}" or vuex-i18n style ":::".
-     *
-     * @param string $s
-     * @return string
      */
     private function adjustString(string $s): string
     {
-        if (!is_string($s)) {
+        if (! is_string($s)) {
             return $s;
         }
 
         $escaped_escape_char = preg_quote('!', '/');
+
         return preg_replace_callback(
             "/(?<!mailto|tel|{$escaped_escape_char}):\w+/",
             function ($matches) {
@@ -200,13 +192,11 @@ class TranslationSupport
     /**
      * Removes escape character if translation string contains sequence that looks like
      * Laravel style ":link", but should not be interpreted as such and was therefore escaped.
-     *
-     * @param string $s
-     * @return string
      */
     private function removeEscapeCharacter(string $s): string
     {
         $escaped_escape_char = preg_quote('!', '/');
+
         return preg_replace_callback(
             "/{$escaped_escape_char}(:\w+)/",
             function ($matches) {
@@ -218,8 +208,6 @@ class TranslationSupport
 
     /**
      * Returns filename, with extension stripped
-     * @param string $filename
-     * @return string
      */
     private function removeExtension(string $filename): string
     {
@@ -230,5 +218,4 @@ class TranslationSupport
 
         return mb_substr($filename, 0, $pos);
     }
-
 }
