@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import Layout from "../Layout";
+import Layout from "../Layout.vue";
 export default {
 name: "Welcome",
     components: {Layout}
