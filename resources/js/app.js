@@ -6,7 +6,10 @@ import { createApp, h } from 'vue'
 import { createI18n } from 'vue-i18n'
 
 createInertiaApp({
-    resolve: name => require(`./Pages/${name}`),
+    resolve: name => {
+        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+        return pages[`./Pages/${name}.vue`]
+    },
     setup({ el, App, props, plugin }) {
         const messages = JSON.parse(props.initialPage.props.translations);
 

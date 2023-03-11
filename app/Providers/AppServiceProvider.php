@@ -27,9 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Filament::serving(function () {
-            Filament::registerTheme(
-                mix('css/filament.css'),
-            );
+            Filament::registerViteTheme('resources/css/filament.css');
         });
 
         FilamentEnvironmentIndicator::configureUsing(function (FilamentEnvironmentIndicator $indicator) {
