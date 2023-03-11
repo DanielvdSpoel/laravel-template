@@ -11,7 +11,7 @@ class TranslationSupport
 {
     private array $availableLocales = ['en', 'nl'];
 
-    public function getTranslationStrings()
+    public function getTranslationStrings(): string
     {
         $path = resource_path('lang');
         $dir = new DirectoryIterator($path);
@@ -61,10 +61,11 @@ class TranslationSupport
     }
 
     /**
-     * @param  string  $path
-     * @return array
+     * @param string $path
+     * @return array|null
+     * @throws Exception
      */
-    private function allocateLocaleJSON($path)
+    private function allocateLocaleJSON(string $path): ?array
     {
         // Ignore non *.json files (ex.: .gitignore, vim swap files etc.)
         if (pathinfo($path, PATHINFO_EXTENSION) !== 'json') {
@@ -79,10 +80,10 @@ class TranslationSupport
     }
 
     /**
-     * @param  string  $path
+     * @param string $path
      * @return array
      */
-    private function allocateLocaleArray($path, $multiLocales = false)
+    private function allocateLocaleArray(string $path, $multiLocales = false): array
     {
         $data = [];
         $dir = new DirectoryIterator($path);

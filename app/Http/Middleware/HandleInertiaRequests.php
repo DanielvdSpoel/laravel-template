@@ -23,9 +23,10 @@ class HandleInertiaRequests extends Middleware
      *
      * @see https://inertiajs.com/asset-versioning
      *
+     * @param Request $request
      * @return string|null
      */
-    public function version(Request $request)
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
@@ -35,11 +36,12 @@ class HandleInertiaRequests extends Middleware
      *
      * @see https://inertiajs.com/shared-data
      *
+     * @param Request $request
      * @return array
      *
      * @throws Exception
      */
-    public function share(Request $request)
+    public function share(Request $request): array
     {
         $translationSupport = new TranslationSupport;
 
