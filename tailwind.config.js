@@ -5,7 +5,6 @@ module.exports = {
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
-        './vendor/filament/**/*.blade.php',
     ],
     darkMode: 'class',
     theme: {
